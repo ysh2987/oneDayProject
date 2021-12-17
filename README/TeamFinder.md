@@ -123,3 +123,22 @@ export const initialFilter = {
 };
 ```
 
+## 이벤트 위임 
+```javascript
+
+// 이벤트 위임 방식
+$citySportsWrap.addEventListener('click', e => {
+  if (!(e.target.matches('.writing-one-delete')) return;
+  e.target.parentNode.parentNode.remove();
+};
+
+// 이벤트 리스너 직접 달기
+$cityContainer.addEventListener('click', () => $cityList.remove());
+$cityContainer.addEventListener('click', () => sportsList.remove());
+```
+- 프로젝트를 하다 보면 수 없이 많은 이벤트 처리를 해야한다.
+- 위와 같이 이벤트를 직접 다는 방식과 이벤트를 상위 요소에서 발생시키고 버블링 단계에서 catch에서 사용하는 방식이 있다.
+- 사실 처음에는 개별적으로 이벤트를 다는게 가독성 측면에서 직관적으로 파악할 수 있다고 생각해서 일일히 달다보니 중복되는 이벤트가 너무 많이 생겼다.
+- 그래서 이벤트 위임 방식으로 변경하였는데 e.target.parentNode.parentNode 같이 요소가 이벤트가 발생한 지점보다 멀리있을 경우 일일히 그 요소가 무엇을 가르키는지 주석을 달아줘야한다.
+- 하지만 e.target.closest으로 이벤트 타겟에 조상요소를 바로 접근할 수 있다.
+- `e.target.closest('.writing-container').remove`이러한 방식으로 명시적으로 어떤 요소인지 확인할 수 있기때문에 위벤트 위임과 closet을 사용하는게 용이한거 같다.
