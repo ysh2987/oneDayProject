@@ -142,3 +142,28 @@ $cityContainer.addEventListener('click', () => sportsList.remove());
 - 그래서 이벤트 위임 방식으로 변경하였는데 e.target.parentNode.parentNode 같이 요소가 이벤트가 발생한 지점보다 멀리있을 경우 일일히 그 요소가 무엇을 가르키는지 주석을 달아줘야한다.
 - 하지만 e.target.closest으로 이벤트 타겟에 조상요소를 바로 접근할 수 있다.
 - `e.target.closest('.writing-container').remove`이러한 방식으로 명시적으로 어떤 요소인지 확인할 수 있기때문에 위벤트 위임과 closet을 사용하는게 용이한거 같다.
+
+
+## Axios
+```javascript
+const res = await fetch('/api/postings', {
+    method: 'POST',
+    headers: { 'content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  }
+```
+- 비동기 처리를 위해 async await을 사용해야 된다고 생각했지만 프로젝트를 하면서 위와 같이 매번 method와 headers, url 주소를 명시해 주는 것은 매우 비효율 적이라고 생각이 들었다.
+- 그래서 axios라는 라이브러리로 axios 인스턴스를 생성해 위에 문제를 한번에 해결할 수 있다.
+
+```javascript
+const usersNickname = axios.create({
+  baseURL: '/',
+  method: 'PATCH',
+  headers: { 'content-Type': 'application/json' },
+  timeout: 1000,
+});
+
+await usersNickname.patch(`users/${userId}`, { nickname: newNickname });
+```
+- 지금은 배포를 하지 않고 로컬 환경에서 사용하기 때문에 baseURL을 `/`로 명시했지만 배포를 하는 순간 `http:blablabla...` 주소 전체를 매번 작성해야 하기 때문에 axois 라이브러리로 해결할 수 있다.
+- timeout 옵션은 1000ms 시간동안 응답이 없으면 요청을 취소하는 옵션이다.
