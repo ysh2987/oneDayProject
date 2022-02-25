@@ -27,18 +27,12 @@ export default {
 
 
 ```
-```vue
-<template>
-  {{userParsing }}
-  {{companyParsing }}
-</template>
-```
 
-- 하지만 props가 변경되어도 화면에 렌더 되지 않음
+- 하지만 data 메서드가 반환하는 데이터가 변경되어도 화면에 재렌더 되지 않음
 
 
 ## 원인
-- props 형태가 object이기 때문에 object 내부에 데이터가 변경되어도 참조하는 주소값이 같기 떄문에 변경이 감지가 되지 않음
+- props 형태가 object이기 때문에 object 내부에 데이터가 변경되어도 참조하는 주소값이 같기 때문에 변경이 감지가 되지 않음
 
 ## 해결 방법 - watch
 - watch는 뷰 인스턴스 내의 데이터의 변화를 감지하여 특정 로직을 수행해야 할 때 사용하는 감시자 속성
